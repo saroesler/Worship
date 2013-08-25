@@ -1,0 +1,29 @@
+///////////////////////////////////////////////////////////////////
+/////						///////////////////////////////////////
+/////	Worship module		///////////////////////////////////////
+/////						///////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+Entity Church: In this Colum, there are all Churches 
+	fields:	cid: 	Id for this Church
+			adress:	The churches address
+			name:	The Churches Name
+			
+Entity Day: In this colum, there are all day having special worships
+	fields:	did:	ID for this day
+			wdate:	the date of this day and all worships
+			dtitle:	The title of this day, like "Chrismas"
+			
+Entity Worships: In this colum, there are all special worships
+	fields: wid:	ID for this worship
+			cid:	The ID of the Church of this worship
+			did:	The ID of the date, this worship happens
+			wtime:	The time, when the worship begins
+			wtitle:	The title of this worship, like "Christmette"
+			
+Entity Churchesworships: In this colum, there are all worships, happen normally in a church
+	fields:	cwid:	The ID of this worship
+			cid:	The ID of the church
+			weektime:	This fields show with numbers the day, like monday.
+			nwtime:	The time, when the worship began
+			nwtitle:	The title of this worship, like "Heilige Messe"

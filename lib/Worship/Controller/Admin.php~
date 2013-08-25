@@ -1,0 +1,336 @@
+<?php
+
+/**
+ * This is the admin controller class providing navigation and interaction functionality.
+ */
+class Worship_Controller_Admin extends Zikula_AbstractController
+{
+    /**
+     * @brief Main function.
+     * @throws Zikula_Forbidden If not ACCESS_ADMIN
+     * @return template Admin/Main.tpl
+     * 
+     * @author Sascha Rösler
+     */
+    public function main()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN));
+    	
+        return $this->view->fetch('Admin/Main.tpl');
+    }
+    
+    public function viewmanage()
+    {
+    	$action = FormUtil::getPassedValue('action', null, 'POST');
+    	switch($action)
+    	{
+    	case 'all':
+    		return ModUtil::url($this->name, 'user','all');
+    	case 'special':
+    		return ModUtil::url($this->name, 'user','special');
+    	case 'daily':
+    		return (ModUtil::url($this->name, 'user','daily'));
+    	}
+    }
+    
+    /**
+     * @brief Churches view function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return template Admin/ChurchesView.tpl
+     *
+     * @author Christian Flach
+     */
+    public function ChurchesView()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	
+    	$churches = $this->entityManager->getRepository('Worship_Entity_Church')->findBy(array());
+    	return $this->view
+    		->assign('churches', $churches)
+    		->fetch('Admin/ChurchesView.tpl');
+    }
+    
+    /**
+     * @brief Churche add function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return redirect self::ChurchesView()
+     */
+    public function ChurchAdd()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	$action = FormUtil::getPassedValue('action', null, 'POST');
+    	switch($action)
+    	{
+    	case 'add':
+    		$name = FormUtil::getPassedValue('inname', null, 'POST');
+      		$adress = FormUtil::getPassedValue('inadress', null, 'POST'); 	
+    	
+			if($name == "")
+				return LogUtil::RegisterError($this->__("The added church has no name."), null, ModUtil::url($this->name, 'admin', 'ChurchesView'));
+			if($adress == "")
+				LogUtil::RegisterStatus($this->__("The church has no adress."));
+			
+			$church = new Worship_Entity_Church();
+			$church->setName($name);
+			$church->setAdress($adress);
+			$this->entityManager->persist($church);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Church has been added successfully."));
+			break;
+			
+		case 'del':
+			$actionid = FormUtil::getPassedValue('id',null,'POST');
+			if( $actionid=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','ChurchesView'));
+			$church = $this->entityManager->find('Worship_Entity_Church', $actionid);
+			$this->entityManager->remove($church);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Church has been removed successfully."));
+			break;				
+		}
+    	$this->redirect(ModUtil::url($this->name, 'admin', 'ChurchesView'));
+    } 
+    
+    
+    
+    /******************
+    ***				***
+    ***Special days ***
+    ***=============***
+    ***				***
+    *******************/
+    
+     /**
+     * @brief day view function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return 
+     */
+    public function special_days()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	
+    	$days = $this->entityManager->getRepository('Worship_Entity_Day')->findBy(array());
+    	return $this->view
+    		->assign('days', $days)
+    		->fetch('Admin/special_days.tpl');
+    }
+    
+    /**
+     * @brief day manage function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return redirect self::special_days()
+     */
+    public function specialdayManage()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	$action = FormUtil::getPassedValue('action', null, 'POST');
+    	switch($action)
+    	{
+    	case 'add':
+      		$date = FormUtil::getPassedValue('indate', null, 'POST'); 
+      		$title = FormUtil::getPassedValue('intitle', 0, 'POST'); 	
+    	
+    		if($title == "")
+				return LogUtil::RegisterError($this->__("The added day has no title. Please enter a title for this day, like 'Chrismas'."), null, ModUtil::url($this->name, 'admin', 'special_days'));
+			if($date == "")
+				return LogUtil::RegisterError($this->__("The added day has no date to happen."), null, ModUtil::url($this->name, 'admin', 'special_days'));
+			
+			$day = new Worship_Entity_Day();
+			$day->setdtitle($title);
+			$day->setwDate($date);
+			echo($date);
+			$this->entityManager->persist($day);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Day has been added successfully."));
+			break;
+			
+		case 'del':
+			$actionid = FormUtil::getPassedValue('id',null,'POST');
+			if( $actionid=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','special_days'));
+			$day = $this->entityManager->find('Worship_Entity_Day', $actionid);
+			$this->entityManager->remove($day);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Day has been removed successfully."));
+			break;	
+		case 'wor':
+		$actionid = FormUtil::getPassedValue('id',null,'POST');
+			if( $actionid=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','special_days'));
+    	$this->redirect(ModUtil::url($this->name, 'admin', 'special_worships', array('id'=>$actionid)));
+		}
+    	$this->redirect(ModUtil::url($this->name, 'admin', 'special_days'));
+    } 
+    
+    
+    /**********************
+    ***					***
+    ***Special worships ***
+    ***=================***
+    ***					***
+    ***********************/
+    
+     /**
+     * @brief worship view function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return 
+     */
+    public function special_worships()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	$did= FormUtil::getPassedValue('id', NULL, 'GET');
+    	
+    	//tagesdaten laden
+    	 $day = $this->entityManager->find('Worship_Entity_Day', $did);
+    	//TODO: array mit tagesdaten ersetellen, ersetllen Manage übergeben und Überschrift generieren
+    	
+    	$dayworships = $this->entityManager->getRepository('Worship_Entity_Worships')->findBy(array('did' => $did));
+		
+    	return $this->view
+    		->assign('day', $day)
+    		->assign('dayworships', $dayworships)
+    		->fetch('Admin/special_worships.tpl');
+    }
+    
+        /**
+     * @brief worship add function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return redirect self::special_worship()
+     */
+    public function specialworshipManage()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	$action = FormUtil::getPassedValue('action', null, 'POST');
+
+    	$did = FormUtil::getPassedValue('id', NULL, 'GET');
+
+    	switch($action)
+    	{
+    	case 'add':
+      		$time = FormUtil::getPassedValue('intime', null, 'POST'); 
+      		$title = FormUtil::getPassedValue('intitle', 0, 'POST'); 
+      		$church = FormUtil::getPassedValue('inchurch', 0, 'POST');	
+    		if( $did=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','special_worships', array('id' => $did)));
+    		if($title == "")
+				return LogUtil::RegisterError($this->__("The added worship has no title. Please enter a title for this day, like 'Heilige Messe'."), null, ModUtil::url($this->name, 'admin', 'special_worships', array('id' => $did)));
+			if($time == "")
+				return LogUtil::RegisterError($this->__("The added worship has no time to happen."), null, ModUtil::url($this->name, 'admin', 'special_worships', array('id' => $did)));
+			if($church == "")
+				return LogUtil::RegisterError($this->__("The added worship has no church to take place."), null, ModUtil::url($this->name, 'admin', 'special_worships', array('id' => $did)));
+			$worship = new Worship_Entity_Worships();
+			$worship->setwtitle($title);
+			$worship->setwtime($time);
+			$worship->setCid($church);
+			$worship->setwDid($did);
+			echo($time);
+			$this->entityManager->persist($worship);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Worship has been added successfully."));
+			break;
+			
+		case 'del':
+			$actionid = FormUtil::getPassedValue('id',null,'POST');
+			if( $actionid=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','special_worships', array('id' => $did)));
+			$worship = $this->entityManager->find('Worship_Entity_Worships', $actionid);
+			$this->entityManager->remove($worship);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Worship has been removed successfully."));
+			break;	
+		case 'back':
+		    	$this->redirect(ModUtil::url($this->name, 'admin', 'special_days', array('id' => $did)));
+							
+		}
+    	$this->redirect(ModUtil::url($this->name, 'admin', 'special_worships', array('id' => $did)));
+    }
+    
+    
+     /**********************
+    ***					***
+    ***  daily worships ***
+    ***=================***
+    ***					***
+    ***********************/
+    
+     /**
+     * @brief daily view function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return 
+     */
+    //TODO: all- template, funktions
+      public function daily_Worships()
+    {
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	
+    	$worships = $this->entityManager->getRepository('Worship_Entity_Churchesworships')->findBy(array());
+    	return $this->view
+    		->assign('worships', $worships)
+    		->fetch('Admin/daily_Worships.tpl');
+    }
+    
+           /**
+     * @brief worship add function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return redirect self::special_worship()
+     */
+    public function dailyworshipManage()
+    {
+    	//TODO: Time schreiben
+    	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE));
+    	$action = FormUtil::getPassedValue('action', null, 'POST');
+    	switch($action)
+    	{
+    	case 'add':
+      		$time = FormUtil::getPassedValue('intime', null, 'POST'); 
+      		$title = FormUtil::getPassedValue('intitle', 0, 'POST'); 
+      		$church = FormUtil::getPassedValue('inchurch', 0, 'POST');	
+    		$day = FormUtil::getPassedValue('inday',null,'POST');
+			if( $day=="")
+				return LogUtil::RegisterError($this->__("The worship has no day to happen."), null, ModUtil::url($this->name, 'admin','daily_worships'));
+    		if($title == "")
+				return LogUtil::RegisterError($this->__("The added worship has no title. Please enter a title for this day, like 'Heilige Messe'."), null, ModUtil::url($this->name, 'admin', 'daily_worships'));
+			if($time == "")
+				return LogUtil::RegisterError($this->__("The added worship has no time to happen."), null, ModUtil::url($this->name, 'admin', 'daily_worships'));
+			if($church == "")
+				return LogUtil::RegisterError($this->__("The added worship has no church to take place."), null, ModUtil::url($this->name, 'admin', 'daily_worships'));
+			$worship = new Worship_Entity_Churchesworships();
+			$worship->setnwtitle($title);
+			$worship->setnwtime($time);
+			$worship->setcid($church);
+			$worship->setweektime($day);
+			echo($time);
+			$this->entityManager->persist($worship);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Worship has been added successfully."));
+			break;
+			
+		case 'del':
+			$actionid = FormUtil::getPassedValue('id',null,'POST');
+			if( $actionid=="")
+				return LogUtil::RegisterError($this->__("ID is missing."), null, ModUtil::url($this->name, 'admin','daily_worships'));
+			$worship = $this->entityManager->find('Worship_Entity_Churchesworships', $actionid);
+			$this->entityManager->remove($worship);
+			$this->entityManager->flush();
+			LogUtil::RegisterStatus($this->__("Worship has been removed successfully."));
+			break;	
+		
+							
+		}
+    	$this->redirect(ModUtil::url($this->name, 'admin', 'daily_worships'));
+    }
+    
+    /**
+     * @brief worship add function.
+     * @throws Zikula_Forbidden If not ACCESS_MODERATE
+     * @return redirect self::special_worship()
+     */
+    public function Help()
+    {
+    	return $this->view
+    		->assign('worships', $worships)
+    		->fetch('Admin/Help.tpl');
+    }
+    
+}
+

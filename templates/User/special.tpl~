@@ -1,0 +1,18 @@
+<h2>Gottesdienstordnung</h2>
+<div class="z-errormsg">
+	<h3>Besondere Gottesdieste</h3>
+	
+	{foreach from=$worshipdays item='worshipday'}
+		<div class="special_mess">
+		    	<p class="ueber">{$worshipday.day->getwDateFormattedout()} {$worshipday.day->getdtitle()}</p>
+		    	<table >
+					{foreach from=$worshipday.worships item='worship'}
+						<tr>
+							<td class="time"> {$worship.wtime->format('G:i')} Uhr:</td>
+							<td>{$worship.getwtitle} in {modapifunc modname='worship' type='admin' func='getChurchNameById' id=$worship.cid  }</td>
+						</tr> 
+		      		{/foreach}
+			</table>
+		</div>
+	{/foreach}
+</div>
