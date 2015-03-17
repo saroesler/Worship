@@ -23,11 +23,11 @@ class Worship_Entity_Day extends Zikula_EntityAccess
     private $did;
 
     /**
-     * The following are annotations which define the wdate field.
+     * The following are annotations which define the ddate field.
      *
      * @ORM\Column(type="date")
      */
-    private $wdate;
+    private $ddate;
     
     /**
      * The following are annotations which define the dtitle field.
@@ -42,18 +42,17 @@ class Worship_Entity_Day extends Zikula_EntityAccess
         return $this->did;
     }
     
-
-    public function getwdate()
+    public function getDdate()
     {
-        return $this->wdate;
+        return $this->ddate;
     }
     
-    public function getwDateFormatted()
+    public function getDdateFormatted()
     {
-        return $this->wdate->format('d.m.Y');
+        return $this->ddate->format('d.m.');
     }
     
-    public function getwDateFormattedout()
+    public function getddateFormattedout()
     {
     	$trans = array(
 			'Monday'    => 'Montag',
@@ -79,24 +78,23 @@ class Worship_Entity_Day extends Zikula_EntityAccess
 			'October'   => 'Oktober',
 			'December'  => 'Dezember',
 		);
-		$date = $this->wdate->format('D d.m.');
+		$date = $this->ddate->format('D d.m.');
 		$date = strtr($date, $trans);  
         return $date;
     }
-        public function getdtitle()
+    
+    public function setDdate($ddate)
+    {
+    	$this->ddate = new \Datetime($ddate);
+    }
+    
+    public function getDtitle()
     {
         return $this->dtitle;
     }
     
-
-    public function setdtitle($dtitle)
+    public function setDtitle($dtitle)
     {
         $this->dtitle = $dtitle;
-    }
-    
-    public function setwdate($wdate)
-    {
-    	$this->wdate = new \Datetime($wdate);
-
     }
 }

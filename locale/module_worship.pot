@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-10 15:45+0000\n"
+"POT-Creation-Date: 2014-03-14 20:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: lib/Worship/Handler/WorshipEdit.php:40
+#, php-format
+msgid "Worship with id %s not found"
+msgstr ""
+
+#: lib/Worship/Handler/GeneralworshipEdit.php:41
+#, php-format
+msgid "Generalworship with id %s not found"
+msgstr ""
+
 #: lib/Worship/Handler/Edit.php:39
 #, php-format
 msgid "Church with id %s not found"
+msgstr ""
+
+#: lib/Worship/Handler/DayEdit.php:38
+#, php-format
+msgid "Day with id %s not found"
 msgstr ""
 
 #: lib/Worship/Version.php:15 lib/Worship/Api/Account.php:33
@@ -38,140 +53,215 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: lib/Worship/Api/Admin.php:27 templates/Admin/ChurchesView.tpl:1
-msgid "Churches"
+#: lib/Worship/Api/Admin.php:27 templates/Admin/generalworships.tpl:6
+msgid "General Worships"
 msgstr ""
 
 #: lib/Worship/Api/Admin.php:28
-msgid "manage and create churches"
+msgid "manage and create weekly Worships"
 msgstr ""
 
-#: lib/Worship/Api/Admin.php:36
-msgid "Special worships"
+#: lib/Worship/Api/Admin.php:36 templates/Admin/churches.tpl:1
+msgid "Churches"
 msgstr ""
 
 #: lib/Worship/Api/Admin.php:37
-msgid "manage and create special worships"
+msgid "manage and create churches"
 msgstr ""
 
-#: lib/Worship/Api/Admin.php:45
-msgid "Daily worships"
+#: lib/Worship/Api/Admin.php:45 templates/Admin/special_days.tpl:6
+msgid "Special Days"
 msgstr ""
 
 #: lib/Worship/Api/Admin.php:46
-msgid "manage and create daily worships"
+msgid "manage and create special Days"
 msgstr ""
 
-#: lib/Worship/Api/Admin.php:54 templates/Admin/Help.tpl:4
-msgid "Help"
+#: lib/Worship/Api/Admin.php:54
+msgid "View"
 msgstr ""
 
 #: lib/Worship/Api/Admin.php:55
+msgid "show the view"
+msgstr ""
+
+#: lib/Worship/Api/Admin.php:63
+msgid "Print"
+msgstr ""
+
+#: lib/Worship/Api/Admin.php:64
+msgid "Here is the view for printing"
+msgstr ""
+
+#: lib/Worship/Api/Admin.php:72 templates/Admin/Help.tpl:5
+msgid "Help"
+msgstr ""
+
+#: lib/Worship/Api/Admin.php:73
 msgid "Here you can get help."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:69
-msgid "The added church has no name."
+#: lib/Worship/Controller/Admin.php:43 lib/Worship/Controller/Admin.php:412
+msgid "The worship has no date to happen."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:71
-msgid "The church has no adress."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:78
-msgid "Church has been added successfully."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:84 lib/Worship/Controller/Admin.php:123
-#: lib/Worship/Controller/Admin.php:133 lib/Worship/Controller/Admin.php:220
-#: lib/Worship/Controller/Admin.php:241 lib/Worship/Controller/Admin.php:296
-#: lib/Worship/Controller/Admin.php:317 lib/Worship/Controller/Admin.php:393
-msgid "ID is missing."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:113 lib/Worship/Controller/Admin.php:162
-msgid "Church has been removed successfully."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:204
-msgid ""
-"The added day has no title. Please enter a title for this day, like "
-"'Chrismas'."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:206
-msgid "The added day has no date to happen."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:214
-msgid "Day has been added successfully."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:236
-msgid "Day has been removed successfully."
-msgstr ""
-
-#: lib/Worship/Controller/Admin.php:298 lib/Worship/Controller/Admin.php:374
+#: lib/Worship/Controller/Admin.php:45 lib/Worship/Controller/Admin.php:314
 msgid ""
 "The added worship has no title. Please enter a title for this day, like "
 "'Heilige Messe'."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:300 lib/Worship/Controller/Admin.php:376
+#: lib/Worship/Controller/Admin.php:47 lib/Worship/Controller/Admin.php:316
 msgid "The added worship has no time to happen."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:302 lib/Worship/Controller/Admin.php:378
+#: lib/Worship/Controller/Admin.php:49 lib/Worship/Controller/Admin.php:318
 msgid "The added worship has no church to take place."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:311 lib/Worship/Controller/Admin.php:387
-msgid "Worship has been added successfully."
+#: lib/Worship/Controller/Admin.php:58 lib/Worship/Controller/Admin.php:120
+msgid "Worshiphas been added successfully."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:321 lib/Worship/Controller/Admin.php:397
+#: lib/Worship/Controller/Admin.php:79
+msgid "Please enter a date for the beginning.."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:81 lib/Worship/Controller/Admin.php:83
+msgid "Please enter a date for the ending."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:85
+msgid "Please enter valid dates."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:88
+msgid "Please enter a valid option."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:137 lib/Worship/Controller/Admin.php:166
+#: lib/Worship/Controller/Admin.php:176 lib/Worship/Controller/Ajax.php:318
 msgid "Worship has been removed successfully."
 msgstr ""
 
-#: lib/Worship/Controller/Admin.php:372
+#: lib/Worship/Controller/Admin.php:148 lib/Worship/Controller/Admin.php:159
+#: lib/Worship/Controller/Admin.php:229 lib/Worship/Controller/Admin.php:239
+#: lib/Worship/Controller/Admin.php:338 lib/Worship/Controller/Admin.php:348
+#: lib/Worship/Controller/Admin.php:363 lib/Worship/Controller/Admin.php:431
+#: lib/Worship/Controller/Admin.php:441
+msgid "ID is missing."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:213
+msgid "The added church has no name."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:219
+msgid "Church has been added successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:268 lib/Worship/Controller/Ajax.php:95
+msgid "Church has been removed successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:312
 msgid "The worship has no day to happen."
 msgstr ""
 
-#: templates/Admin/special_days.tpl:6 templates/Admin/Help.tpl:2
-#: templates/Admin/special_worships.tpl:6
-#: templates/Admin/special_worships.tpl:10
-#: templates/Admin/daily_Worships.tpl:6
-msgid "Worships"
+#: lib/Worship/Controller/Admin.php:328 lib/Worship/Controller/Ajax.php:131
+#: lib/Worship/Controller/Ajax.php:285
+msgid "Worship has been added successfully."
 msgstr ""
 
-#: templates/Admin/special_days.tpl:12 templates/Admin/special_worships.tpl:16
-#: templates/Admin/ChurchesView.tpl:7 templates/Admin/daily_Worships.tpl:12
-msgid "ID"
+#: lib/Worship/Controller/Admin.php:353 lib/Worship/Controller/Ajax.php:163
+msgid "General worship has been removed successfully."
 msgstr ""
 
-#: templates/Admin/special_days.tpl:13 templates/Admin/ChurchEdit.tpl:9
-#: templates/Admin/special_worships.tpl:17
-#: templates/Admin/daily_Worships.tpl:13
+#: lib/Worship/Controller/Admin.php:365
+msgid "State is missing."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:370 lib/Worship/Controller/Ajax.php:190
+msgid "State has been changed successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:414
+msgid "The added Day has no title. Please enter a title for this day."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:421 lib/Worship/Controller/Ajax.php:218
+msgid "The day has been added successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Admin.php:446 lib/Worship/Controller/Ajax.php:250
+msgid "Day has been removed successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:32
+msgid "There is no valid name!"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:39
+msgid "News has been added successfully."
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:63 lib/Worship/Controller/Ajax.php:155
+#: lib/Worship/Controller/Ajax.php:179 lib/Worship/Controller/Ajax.php:242
+#: lib/Worship/Controller/Ajax.php:310
+msgid "missing $id"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:114 lib/Worship/Controller/Ajax.php:209
+#: lib/Worship/Controller/Ajax.php:269
+msgid "There is no valid date!"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:116 lib/Worship/Controller/Ajax.php:271
+msgid "There is no valid time!"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:118 lib/Worship/Controller/Ajax.php:207
+#: lib/Worship/Controller/Ajax.php:273
+msgid "There is no valid title!"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:120 lib/Worship/Controller/Ajax.php:275
+msgid "There is no valid church!"
+msgstr ""
+
+#: lib/Worship/Controller/Ajax.php:182
+msgid "missing $state"
+msgstr ""
+
+#: templates/Admin/special_days.tpl:19 templates/Admin/special_days.tpl:44
+#: templates/Admin/WorshipEdit.tpl:23 templates/Admin/DayEdit.tpl:25
+#: templates/Admin/ChurchEdit.tpl:9 templates/Admin/Main.tpl:23
+#: templates/Admin/Main.tpl:55 templates/Admin/generalworships.tpl:15
+#: templates/Admin/GernalWorshipEdit.tpl:9 templates/Ajax/special_days.tpl:9
+#: templates/Ajax/Main.tpl:13
 msgid "Title"
 msgstr ""
 
-#: templates/Admin/special_days.tpl:14
+#: templates/Admin/special_days.tpl:20 templates/Admin/special_days.tpl:45
+#: templates/Admin/WorshipEdit.tpl:29 templates/Admin/DayEdit.tpl:28
+#: templates/Admin/Main.tpl:21 templates/Admin/Main.tpl:53
+#: templates/Ajax/special_days.tpl:10 templates/Ajax/Main.tpl:11
 msgid "Date"
 msgstr ""
 
-#: templates/Admin/special_days.tpl:19
-msgid "Days"
+#: templates/Admin/Help.tpl:3 templates/Admin/Main.tpl:6
+msgid "Worships"
 msgstr ""
 
-#: templates/Admin/Help.tpl:6
+#: templates/Admin/Help.tpl:14
 msgid "Add and manage a Church"
 msgstr ""
 
-#: templates/Admin/Help.tpl:7
+#: templates/Admin/Help.tpl:15
 msgid "It is necessary for the hole module to create a church."
 msgstr ""
 
-#: templates/Admin/Help.tpl:8
+#: templates/Admin/Help.tpl:16
 msgid ""
 "You can manage the churches by clicking the \"church\" button in the "
 "headermenue of this module.You can see a list of all Churches there. There "
@@ -181,16 +271,16 @@ msgid ""
 "adding."
 msgstr ""
 
-#: templates/Admin/Help.tpl:10
+#: templates/Admin/Help.tpl:18
 msgid "Add and manage a special worship"
 msgstr ""
 
-#: templates/Admin/Help.tpl:11
+#: templates/Admin/Help.tpl:19
 msgid ""
 "For a special worship is is nacessary to create a church and a special day."
 msgstr ""
 
-#: templates/Admin/Help.tpl:12
+#: templates/Admin/Help.tpl:20
 msgid ""
 "You can manage the special worships by clicking the \"Special worships\" "
 "button in the headermenue of this module.You can see a list of all special "
@@ -208,15 +298,15 @@ msgid ""
 "this worship. With the red cross you can delete your input."
 msgstr ""
 
-#: templates/Admin/Help.tpl:14
+#: templates/Admin/Help.tpl:22
 msgid "Add and manage a daily worship"
 msgstr ""
 
-#: templates/Admin/Help.tpl:15
+#: templates/Admin/Help.tpl:23
 msgid "For a daily worship is is nacessary to create a church and a daily day."
 msgstr ""
 
-#: templates/Admin/Help.tpl:16
+#: templates/Admin/Help.tpl:24
 msgid ""
 "You can manage the daily worships by clicking the \"Daily worships\" button "
 "in the headermenue of this module. You see there again a list. This time of "
@@ -227,11 +317,11 @@ msgid ""
 "input."
 msgstr ""
 
-#: templates/Admin/Help.tpl:18
+#: templates/Admin/Help.tpl:26
 msgid "view"
 msgstr ""
 
-#: templates/Admin/Help.tpl:19
+#: templates/Admin/Help.tpl:27
 msgid ""
 "To view the worships you can use three different types on the main page. At "
 "first you can view all worships, the second type is to view only the specail "
@@ -239,69 +329,75 @@ msgid ""
 "the URL of the viewsides to show the sides in public."
 msgstr ""
 
-#: templates/Admin/ChurchEdit.tpl:1
+#: templates/Admin/WorshipEdit.tpl:15 templates/Admin/DayEdit.tpl:1
+#: templates/Admin/ChurchEdit.tpl:1 templates/Admin/GernalWorshipEdit.tpl:1
 msgid "Editor"
 msgstr ""
 
-#: templates/Admin/ChurchEdit.tpl:4
+#: templates/Admin/WorshipEdit.tpl:18 templates/Admin/ChurchEdit.tpl:4
+#: templates/Admin/GernalWorshipEdit.tpl:4
 msgid "Church Editor"
 msgstr ""
 
-#: templates/Admin/ChurchEdit.tpl:12 templates/Admin/ChurchesView.tpl:9
-msgid "Adress"
-msgstr ""
-
-#: templates/Admin/ChurchEdit.tpl:30
-msgid "Save"
-msgstr ""
-
-#: templates/Admin/ChurchEdit.tpl:31
-msgid "Cancel"
-msgstr ""
-
-#: templates/Admin/special_worships.tpl:18
-#: templates/Admin/daily_Worships.tpl:16
-msgid "Time"
-msgstr ""
-
-#: templates/Admin/special_worships.tpl:19
-#: templates/Admin/daily_Worships.tpl:14
+#: templates/Admin/WorshipEdit.tpl:26 templates/Admin/Main.tpl:24
+#: templates/Admin/Main.tpl:56 templates/Admin/generalworships.tpl:16
+#: templates/Admin/GernalWorshipEdit.tpl:12 templates/Ajax/Main.tpl:14
 msgid "Church"
 msgstr ""
 
-#: templates/Admin/special_worships.tpl:54
-msgid "Back to special days"
+#: templates/Admin/WorshipEdit.tpl:32 templates/Admin/Main.tpl:22
+#: templates/Admin/Main.tpl:54 templates/Admin/generalworships.tpl:14
+#: templates/Admin/GernalWorshipEdit.tpl:18 templates/Ajax/Main.tpl:12
+msgid "Time"
 msgstr ""
 
-#: templates/Admin/Main.tpl:1
-msgid "Admin main page"
+#: templates/Admin/WorshipEdit.tpl:67 templates/Admin/DayEdit.tpl:53
+#: templates/Admin/ChurchEdit.tpl:22 templates/Admin/GernalWorshipEdit.tpl:46
+msgid "Save"
 msgstr ""
 
-#: templates/Admin/Main.tpl:3
-msgid "Views:"
+#: templates/Admin/WorshipEdit.tpl:68 templates/Admin/DayEdit.tpl:54
+#: templates/Admin/ChurchEdit.tpl:23 templates/Admin/GernalWorshipEdit.tpl:47
+msgid "Cancel"
 msgstr ""
 
-#: templates/Admin/Main.tpl:4
-msgid "all worships"
+#: templates/Admin/DayEdit.tpl:20
+msgid "Day Editor"
 msgstr ""
 
-#: templates/Admin/Main.tpl:5
-msgid "special worships"
+#: templates/Admin/Main.tpl:92
+msgid "Delete all Worships"
 msgstr ""
 
-#: templates/Admin/Main.tpl:6
-msgid "daily worships"
+#: templates/Admin/Main.tpl:94
+msgid "from"
 msgstr ""
 
-#: templates/Admin/ChurchesView.tpl:8
-msgid "Name"
+#: templates/Admin/Main.tpl:101
+msgid "to"
 msgstr ""
 
-#: templates/Admin/daily_Worships.tpl:15
+#: templates/Admin/Main.tpl:110
+msgid "Generate Worships"
+msgstr ""
+
+#: templates/Admin/Main.tpl:113
+msgid "Delete Worships"
+msgstr ""
+
+#: templates/Admin/generalworships.tpl:13
+#: templates/Admin/GernalWorshipEdit.tpl:15
 msgid "Weekday"
 msgstr ""
 
-#: templates/User/all.tpl:38 templates/User/daily.tpl:19
-#: templates/User/special.tpl:21
-msgid "Edit"
+#: templates/Admin/churches.tpl:9
+msgid "ID"
+msgstr ""
+
+#: templates/Admin/churches.tpl:10
+msgid "Name"
+msgstr ""
+
+#: templates/User/view.tpl:21
+msgid "Admin page"
 msgstr ""

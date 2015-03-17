@@ -32,9 +32,9 @@ class Worship_Entity_Worships extends Zikula_EntityAccess
     /**
      * The following are annotations which define the did field.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      */
-    private $did;
+    private $wdate;
     
     /**
      * The following are annotations which define the wtime field.
@@ -56,14 +56,14 @@ class Worship_Entity_Worships extends Zikula_EntityAccess
         return $this->wid;
     }
     
-   public function getwDid()
-    {
-        return $this->did;
-    }
-    
     public function getCid()
     {
     	return $this->cid;
+    }
+    
+    public function setCid($cid)
+    {
+        $this->cid = $cid;
     }
     
     public function getCname()
@@ -71,43 +71,135 @@ class Worship_Entity_Worships extends Zikula_EntityAccess
     	return ModUtil::apiFunc('Worship', 'Admin', 'getChurchNameById', array('id' => $this->cid));
     }
     
-	/*public function getddate()
+        public function getwdate()
     {
-    	return ModUtil::apiFunc('Worship', 'Admin', 'getDateById', array('id' => $this->did));
+        return $this->wdate;
     }
-    */
-    public function getwtime()
+    
+    public function getWdateFormatted()
+    {
+        return $this->wdate->format('d.m.y');
+    }
+    
+    public function getWdateFormattedout()
+    {
+    	$trans = array(
+			'Monday'    => 'Montag',
+			'Tuesday'   => 'Dienstag',
+			'Wednesday' => 'Mittwoch',
+			'Thursday'  => 'Donnerstag',
+			'Friday'    => 'Freitag',
+			'Saturday'  => 'Samstag',
+			'Sunday'    => 'Sonntag',
+			'Mon'       => 'Mo',
+			'Tue'       => 'Di',
+			'Wed'       => 'Mi',
+			'Thu'       => 'Do',
+			'Fri'       => 'Fr',
+			'Sat'       => 'Sa',
+			'Sun'       => 'So',
+			'January'   => 'Januar',
+			'February'  => 'Februar',
+			'March'     => 'März',
+			'May'       => 'Mai',
+			'June'      => 'Juni',
+			'July'      => 'Juli',
+			'October'   => 'Oktober',
+			'December'  => 'Dezember',
+		);
+		$date = $this->wdate->format('D d.m.Y');
+		$date = strtr($date, $trans);  
+        return $date;
+    }
+    
+    public function getWdateMonthFormattedout()
+    {
+    	$trans = array(
+			'Monday'    => 'Montag',
+			'Tuesday'   => 'Dienstag',
+			'Wednesday' => 'Mittwoch',
+			'Thursday'  => 'Donnerstag',
+			'Friday'    => 'Freitag',
+			'Saturday'  => 'Samstag',
+			'Sunday'    => 'Sonntag',
+			'Mon'       => 'Mo',
+			'Tue'       => 'Di',
+			'Wed'       => 'Mi',
+			'Thu'       => 'Do',
+			'Fri'       => 'Fr',
+			'Sat'       => 'Sa',
+			'Sun'       => 'So',
+			'January'   => 'Januar',
+			'February'  => 'Februar',
+			'March'     => 'März',
+			'May'       => 'Mai',
+			'June'      => 'Juni',
+			'July'      => 'Juli',
+			'October'   => 'Oktober',
+			'December'  => 'Dezember',
+		);
+		$date = $this->wdate->format('d. F');
+		$date = strtr($date, $trans);  
+        return $date;
+    }
+    
+    public function getWdateMonthYearFormattedout()
+    {
+    	$trans = array(
+			'Monday'    => 'Montag',
+			'Tuesday'   => 'Dienstag',
+			'Wednesday' => 'Mittwoch',
+			'Thursday'  => 'Donnerstag',
+			'Friday'    => 'Freitag',
+			'Saturday'  => 'Samstag',
+			'Sunday'    => 'Sonntag',
+			'Mon'       => 'Mo',
+			'Tue'       => 'Di',
+			'Wed'       => 'Mi',
+			'Thu'       => 'Do',
+			'Fri'       => 'Fr',
+			'Sat'       => 'Sa',
+			'Sun'       => 'So',
+			'January'   => 'Januar',
+			'February'  => 'Februar',
+			'March'     => 'März',
+			'May'       => 'Mai',
+			'June'      => 'Juni',
+			'July'      => 'Juli',
+			'October'   => 'Oktober',
+			'December'  => 'Dezember',
+		);
+		$date = $this->wdate->format('d. F Y');
+		$date = strtr($date, $trans);  
+        return $date;
+    }
+    
+    public function setWdate($wdate)
+    {
+    	$this->wdate = new \Datetime($wdate);
+    }
+    
+    public function getWtime()
     {
         return $this->wtime;
     }
     
-    public function getwtimeFormatted()
+    public function getWtimeFormatted()
     {
-        return $this->wtime->format('G:i');
+        return $this->wtime->format('H:i');
     }
     
-    public function getwtitle()
-    {
-        return $this->wtitle;
-    }
-    
-
-    public function setCid($cid)
-    {
-        $this->cid = $cid;
-    }
-    
-    public function setwDid($did)
-    {
-        $this->did = $did;
-    }
-    
-    public function setwtime($wtime)
+    public function setWtime($wtime)
     {
         $this->wtime = new \DateTime($wtime);
     }
     
-    public function setwtitle($wtitle)
+    public function getWtitle()
+    {
+        return $this->wtitle;
+    }
+    
+    public function setWtitle($wtitle)
     {
     	$this->wtitle = $wtitle;
     }

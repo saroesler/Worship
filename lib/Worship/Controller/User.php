@@ -8,106 +8,44 @@ class Worship_Controller_User extends Zikula_AbstractController
      * @brief Main function.
      * @return string
      * 
-     * @author Christian Flach
+     * @author Sascha Rösler
      */
     public function main()
     {
         return true;
     }
     
-    public function daily()
+    public function view()
     {
+    	$Worships = $this->entityManager->getRepository('Worship_Entity_Worships')->findBy(array(),array('wdate'=>'ASC', 'wtime'=>'ASC'));
     	$churches = $this->entityManager->getRepository('Worship_Entity_Church')->findBy(array());
-    	
-    	foreach($churches as $church)
+    	$days = $this->entityManager->getRepository('Worship_Entity_Day')->findBy(array());
+    	$dates = array();
+    	foreach($Worships as $key =>$Worship)
     	{
-    		$cid=$church->getCid();
-			$em = $this->getService('doctrine.entitymanager');
-			$qb = $em->createQueryBuilder();
-			$qb->select('p')
-			   ->from('Worship_Entity_Churchesworships', 'p')
-			  ->where('p.cid = :test')
-			  ->setParameter('test', $cid)
-			  ->orderBy('p.weektime', 'ASC')
-			  ->orderBy('p.nwtime', 'ASC')
-			->setMaxResults(100);
-			$worshipchurches[]= array( 'worships'=>$qb->getQuery()->getArrayResult(), 'church'=>$church);
+    		if($key>0)
+    		{
+    			if($Worships[$key-1]->getWdateFormattedout()!=$Worship->getWdateFormattedout())
+    				$dates[] = array("date"=>$Worship->getWdateFormattedout(),"date_unformat"=>$Worship->getwdate(),"dayname"=>"");
+    		}
+    		else
+    			$dates[] = array("date"=>$Worship->getWdateFormattedout(),"date_unformat"=>$Worship->getwdate(),"dayname"=>"");
 		}
+		foreach($dates as $key =>$date)
+		{
+			$temp = $date['date_unformat']->format('d.m.');
+			foreach($days as $day)
+			{
+				$temp2 = $day->getDdateFormatted();
+				if($temp == $temp2)
+					$dates[$key]["dayname"] = $day->getDtitle();
+			}
+		}
+		
 		return $this->view
     		->assign('churches', $churches)
-    		->assign('worshipchurches',$worshipchurches)
-    		->fetch('User/daily.tpl');
-    }
-    
-    public function special()
-    {
-    	$days = $this->entityManager->getRepository('Worship_Entity_Day')->findBy(array());
-    	
-    	foreach($days as $day)
-    	{
-    		$did=$day->getDid();
-			$em = $this->getService('doctrine.entitymanager');
-			$qb = $em->createQueryBuilder();
-			$qb->select('p')
-			   ->from('Worship_Entity_Worships', 'p')
-			  ->where('p.did = :test')
-			  ->setParameter('test', $did)
-			  ->orderBy('p.wtime', 'ASC')
-			->setMaxResults(100);
-			$worshipdays[]= array( 'worships'=>$qb->getQuery()->getArrayResult(), 'day'=>$day);
-		}
-		return $this->view
-    		->assign('worshipdays',$worshipdays)
-    		->fetch('User/special.tpl');
-    }
-    
-    public function all()
-    {
-    	//for the daily worships
-    	$churches = $this->entityManager->getRepository('Worship_Entity_Church')->findBy(array());
-    	
-    	foreach($churches as $church)
-    	{
-    		$cid=$church->getCid();
-			$em = $this->getService('doctrine.entitymanager');
-			$qb = $em->createQueryBuilder();
-			$qb->select('p')
-			   ->from('Worship_Entity_Churchesworships', 'p')
-			  ->where('p.cid = :test')
-			  ->setParameter('test', $cid)
-			  ->orderBy('p.weektime', 'ASC')
-			  ->orderBy('p.nwtime', 'ASC')
-			->setMaxResults(100);
-			$worshipchurches[]= array( 'worships'=>$qb->getQuery()->getArrayResult(), 'church'=>$church);
-		}
-		
-		//for the special worships
-		$days = $this->entityManager->getRepository('Worship_Entity_Day')->findBy(array());
-    	
-    	foreach($days as $day)
-    	{
-    		$did=$day->getDid();
-			$em = $this->getService('doctrine.entitymanager');
-			$qb = $em->createQueryBuilder();
-			$qb->select('p')
-			   ->from('Worship_Entity_Worships', 'p')
-			  ->where('p.did = :test')
-			  ->setParameter('test', $did)
-			  ->orderBy('p.wtime', 'ASC')
-			->setMaxResults(100);
-			$worshipdays[]= array( 'worships'=>$qb->getQuery()->getArrayResult(), 'day'=>$day);
-		}
-		
-//TODO: rechte Abfragen
-		 // Display Admin Edit Link
-        if ($accesslevel >= ACCESS_EDIT) {
-            $this->view->assign('displayeditlink', true);
-        } else {
-            $this->view->assign('displayeditlink', false);
-        }
-		return $this->view
-			->assign('worshipchurches', $worshipchurches)
-    		->assign('worshipdays',$worshipdays)
-    		->fetch('User/all.tpl');
+    		->assign('Worships',$Worships)
+    		->assign('dates',$dates)
+    		->fetch('User/view.tpl');
     }
 }

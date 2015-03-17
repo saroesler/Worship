@@ -29,27 +29,9 @@ class Worship_Entity_Church extends Zikula_EntityAccess
      */
     private $name;
     
-    /**
-     * The following are annotations which define the adress field.
-     *
-     * @ORM\Column(type="string", length="255")
-     */
-    private $adress;
-
-
     public function getCid()
     {
         return $this->cid;
-    }
-    
-    public function getAdress()
-    {
-        return $this->adress;
-    }
-
-    public function setAdress($adress)
-    {
-        $this->adress = $adress;
     }
     
     public function getName()

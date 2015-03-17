@@ -15,7 +15,7 @@ class Worship_Version extends Zikula_AbstractVersion
         $meta['displayname']    = $this->__('Worship');
         $meta['description']    = $this->__("Creat Worshiplist"); ///@todo description
         $meta['url']            = $this->__('worship');
-        $meta['version']        = '1.0.0';
+        $meta['version']        = '2.0.0';
         $meta['official']       = 0;
         $meta['author']         = 'Sascha Rösler';
         $meta['contact']        = 'sa-roelser@t-online.de';

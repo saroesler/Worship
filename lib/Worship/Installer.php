@@ -9,7 +9,7 @@ class Worship_Installer extends Zikula_AbstractInstaller
 	 * @brief Provides an array containing default values for module variables (settings).
 	 * @return array An array indexed by variable name containing the default values for those variables.
 	 *
-	 * @author Christian Flach
+	 * @author Sascha Rösler
 	 */
 	protected function getDefaultModVars()
 	{
@@ -54,7 +54,7 @@ class Worship_Installer extends Zikula_AbstractInstaller
 		}
 		try {
 			DoctrineHelper::createSchema($this->entityManager, array(
-				'Worship_Entity_Churchesworships'
+				'Worship_Entity_GeneralWorships'
 			));
 		} catch (Exception $e) {
 			return LogUtil::registerError($e);
@@ -108,7 +108,7 @@ class Worship_Installer extends Zikula_AbstractInstaller
 			'Worship_Entity_Worships'
 		));
 		DoctrineHelper::dropSchema($this->entityManager, array(
-			'Worship_Entity_Churchesworships'
+			'Worship_Entity_GeneralWorships'
 		));
 
 

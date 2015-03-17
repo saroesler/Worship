@@ -8,19 +8,11 @@
         		<th>
         			<label for="title">{gt text='Title'}</label>
         		</th>
-        		<th>
-        			<label for="title">{gt text='Adress'}</label>
-        		</th>
         	</thead>
         	<tbody>
         		<td>
         			<div class="z-formrow">
             			{formtextinput id="name" maxLength=300 mandatory=true text=$church->getName()}
-        			</div>
-        		</td>
-        		<td>
-        			<div class="z-formrow">
-            			{formtextinput id="adress" maxLength=300 mandatory=true text=$church->getAdress()}
         			</div>
         		</td>
         	</tbody>

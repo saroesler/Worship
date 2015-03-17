@@ -59,7 +59,7 @@ class Worship_Handler_Edit extends Zikula_Form_AbstractHandler
     public function handleCommand(Zikula_Form_View $view, &$args)
     {
     	$actionid = FormUtil::getPassedValue('id',null,'GET');
-        $url = ModUtil::url('Worship', 'admin', 'ChurchesView' );
+        $url = ModUtil::url('Worship', 'admin', 'churches' );
         if ($args['commandName'] == 'cancel') {
             return $view->redirect($url);
         }

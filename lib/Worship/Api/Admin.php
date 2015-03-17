@@ -21,34 +21,52 @@ class Worship_Api_Admin extends Zikula_AbstractApi
 			);
 		}
 		
-		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE)) {
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
 			$links[] = array(
-				'url'=> ModUtil::url('Worship', 'admin', 'ChurchesView'),
+				'url'=> ModUtil::url('Worship', 'admin', 'generalworships'),
+				'text'  => $this->__('General Worships'),
+				'title' => $this->__('manage and create weekly Worships'),
+				'class' => 'z-icon-es-display',
+			);
+		}
+		
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
+			$links[] = array(
+				'url'=> ModUtil::url('Worship', 'admin', 'churches'),
 				'text'  => $this->__('Churches'),
 				'title' => $this->__('manage and create churches'),
 				'class' => 'z-icon-es-display',
 			);
 		}
 		
-		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE)) {
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
 			$links[] = array(
-				'url'=> ModUtil::url('Worship', 'admin', 'special_days'),
-				'text'  => $this->__('Special worships'),
-				'title' => $this->__('manage and create special worships'),
+				'url'=> ModUtil::url('Worship', 'admin', 'days'),
+				'text'  => $this->__('Special Days'),
+				'title' => $this->__('manage and create special Days'),
 				'class' => 'z-icon-es-display',
 			);
 		}
 		
-		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE)) {
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
 			$links[] = array(
-				'url'=> ModUtil::url('Worship', 'admin', 'Daily_worships'),
-				'text'  => $this->__('Daily worships'),
-				'title' => $this->__('manage and create daily worships'),
+				'url'=> ModUtil::url('Worship', 'user', 'view'),
+				'text'  => $this->__('View'),
+				'title' => $this->__('show the view'),
 				'class' => 'z-icon-es-display',
 			);
 		}
 		
-		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_MODERATE)) {
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
+			$links[] = array(
+				'url'=> ModUtil::url('Worship', 'admin', 'printpdf'),
+				'text'  => $this->__('Print'),
+				'title' => $this->__('Here is the view for printing'),
+				'class' => 'z-icon-es-print',
+			);
+		}
+		
+		if (SecurityUtil::checkPermission('Worship::', '::', ACCESS_ADMIN)) {
 			$links[] = array(
 				'url'=> ModUtil::url('Worship', 'admin', 'Help'),
 				'text'  => $this->__('Help'),
@@ -64,13 +82,28 @@ class Worship_Api_Admin extends Zikula_AbstractApi
 	{
 		$churches = $this->entityManager->getRepository('Worship_Entity_Church')->findBy(array());
 		
-		$list = "<select name=\"{$args['name']}\">";
+		$list = "<select name=\"{$args['name']}\" id=\"{$args['name']}\">";
 		
 		foreach($churches as $church)
 		{
 			$list .="<option value=\"{$church->getCid()}\"> {$church->getName()} </option>";
 		}
 		$list .="</select>";
+		return $list;
+	}
+	
+	public function getChurchSelectorForm($args)
+	{
+		$churches = $this->entityManager->getRepository('Worship_Entity_Church')->findBy(array());
+		
+		$list = array();
+		foreach($churches as $church)
+		{
+			$list[] = array(
+			'text' => $church->getName(),
+			'value' => $church->getCid(),
+			);
+		}
 		return $list;
 	}
 	
@@ -104,7 +137,7 @@ class Worship_Api_Admin extends Zikula_AbstractApi
 			{
 				case 0: $day = 'Sonntag';break;
 				case 1: $day = 'Montag';break;
-				case 2: $day = 'Dinstag';break;
+				case 2: $day = 'Dienstag';break;
 				case 3: $day = 'Mittwoch';break;
 				case 4: $day = 'Donnerstag';break;
 				case 5: $day = 'Freitag';break;
@@ -117,7 +150,7 @@ class Worship_Api_Admin extends Zikula_AbstractApi
 	{
 		$weekdays = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
 		
-		$list = "<select name=\"{$args['name']}\">";
+		$list = "<select name=\"{$args['name']}\" id=\"{$args['name']}\">";
 		$count = 0;
 		foreach($weekdays as $weekday)
 		{
@@ -125,6 +158,42 @@ class Worship_Api_Admin extends Zikula_AbstractApi
 			$count ++;
 		}
 		$list .="</select>";
+		return $list;
+	}
+	
+	public function getWeekdaySelectorForm($args)
+	{
+		
+		$list = array();
+		$list[] = array(
+		'text' => 'Sonntag',
+		'value' => '0',
+		);
+		$list[] = array(
+		'text' => 'Montag',
+		'value' => '1',
+		);
+		$list[] = array(
+		'text' => 'Dienstag',
+		'value' => '2',
+		);
+		$list[] = array(
+		'text' => 'Mittwoch',
+		'value' => '3',
+		);
+		$list[] = array(
+		'text' => 'Donnerstag',
+		'value' => '4',
+		);
+		$list[] = array(
+		'text' => 'Freitag',
+		'value' => '5',
+		);
+		$list[] = array(
+		'text' => 'Samstag',
+		'value' => '6',
+		);
+		
 		return $list;
 	}
 }
