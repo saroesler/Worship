@@ -79,8 +79,6 @@ class Worship_Controller_Admin extends Zikula_AbstractController
 			return LogUtil::RegisterError($this->__("Please enter a date for the beginning.."), null, ModUtil::url($this->name, 'admin','main'));
     	if($todate == "")
 			return LogUtil::RegisterError($this->__("Please enter a date for the ending."), null, ModUtil::url($this->name, 'admin', 'main'));
-      	if($todate == "")
-			return LogUtil::RegisterError($this->__("Please enter a date for the ending."), null, ModUtil::url($this->name, 'admin', 'main'));
 		$dateTimestampfrom = strtotime($fromdate);
 		$dateTimestampto = strtotime($todate);
 		if($dateTimestampto<$dateTimestampfrom)
@@ -131,7 +129,7 @@ class Worship_Controller_Admin extends Zikula_AbstractController
 				$Worships = $this->entityManager->getRepository('Worship_Entity_Worships')->findBy(array(),array('wdate'=>'ASC', 'wtime'=>'ASC'));
 				foreach($Worships as $Worship)
 				{
-					if(($Worship->getWdateFormatted()>=$fromdate)&&($Worship->getWdateFormatted()<=$todate))
+					if(($Worship->getWdateFormatted()>=($fromdate-1))&&($Worship->getWdateFormatted()<=$todate))
 					{
 						$actionid = $Worship->getWid();
 						$delWorship = $this->entityManager->find('Worship_Entity_Worships', $actionid);
@@ -559,7 +557,9 @@ class Worship_Controller_Admin extends Zikula_AbstractController
 		$pdf->Ln();
         
          $data = $this->pdfTableBodyData($dates, $churches, $Worships);
-         
+        
+        $linecounter = 0;	//Zählt alle Zeilen für einen Seitenumbruch
+        
         foreach($data as $row) {
             //calculate cellheigt
             $linecount = 0;
@@ -567,7 +567,20 @@ class Worship_Controller_Admin extends Zikula_AbstractController
             {
             	$linecount = max($pdf->getNumLines($cell, 70),$linecount);
             }
-            $linecount *= 7;
+            $linecounter += $linecount;
+            if($linecounter > 18)
+            {
+            	$pdf->setPrintFooter(false);
+            }
+            else
+            	$pdf->setPrintFooter(true);
+            
+            if($linecounter > 20)
+            {
+            	$pdf->AddPage();
+            	$linecounter = 0;
+            }
+            $linecount *= 6.5;
             $pdf->SetFont('', 'B',12);
             $pdf->MultiCell( $header['width'][0], $linecount, $row[0], array('B' => array('width' => $cell_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0))), "R", 1, 0, '', '', true );
             $pdf->SetFont('', '',12);
